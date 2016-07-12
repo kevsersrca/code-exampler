@@ -44,6 +44,22 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ url('/post') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Post">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</span>
+                                <span class="full-nav"> Post </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/post/create') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Create New Post">
+							<span class="glyphicon glyphicon-plus"></span>
+						</span>
+                                <span class="full-nav"> Create New Post </span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url('/logout') }}">
 						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Logout">
 							<span class="fa fa-sign-out"></span>

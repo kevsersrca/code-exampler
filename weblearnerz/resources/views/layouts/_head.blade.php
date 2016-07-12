@@ -5,12 +5,16 @@
     <title>Laravel @yield('title')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css" >
     <style>
-
         @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-        body {
-            padding-top: 15px;
-            padding-left: 65px;
+        .container > .well > h1,h3
+        {
+            font-family: Impact;
         }
+
+        body {
+             padding-top: 15px;
+             padding-left: 65px;
+         }
         .container
         {
             padding: 5%;
@@ -147,7 +151,6 @@
         .navbar-purple .navbar-brand:focus,
         .navbar-purple .navbar-nav > li > a:focus {
             color: rgb(205, 191, 227);;
-            font-family: Comic Sans;
         }
         .navbar-purple .navbar-brand:hover,
         .navbar-purple .navbar-nav > li > a:hover,
