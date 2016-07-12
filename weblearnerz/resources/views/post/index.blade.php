@@ -3,36 +3,37 @@
 @section('title' , '| Post')
 
 @section('content')
-    @foreach($post as $row)
-        <div class="well">
-            <h1 class="list-group-item-heading text-center">
-                <div class="clearfix">{{$row->title}}</div>
-            </h1>
-            <h3 class="list-group-item-text">Post Explanation:
-                <div class="clearfix well">{{$row->explanation}}</div>
-            </h3>
-            <h3 class="list-group-item-text">Post Usage:
-                <div class="clearfix well">{{$row->usage}}</div>
-            </h3>
-            <h3 class="list-group-item-text">Code Example:
-                <div class="clearfix well">{{$row->codeexample}}</div>
-            </h3>
-            <a href="{{route('post.edit',$row->id)}}" class="btn btn-success">Edit</a>
-            <a href="javascript:;" class="btn btn-warning">Delete</a>
-        </div>
-    @endforeach
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr class="active">
+            <td>Title</td>
+            <td>Explanation</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($post as $row)
+            <tr class="active">
+                <td><a href="{{route('post.show',$row->id)}}" class="btn btn-link">{{$row->title}}</a></td>
+                <td><a href="{{route('post.show',$row->id)}}" class="btn btn-link">{{$row->explanation}}</a></td>
+                <td>
+                    <a href="javascript:;" data-href="{{ route('posts.show',$row->id) }}"  class="btn btn-default delete-confirm">Delete</a>
+                    <a href="{{route('post.edit',$row->id)}}" class="btn btn-info">EDIT</a>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection
 @section("scripts")
     <script>
-        $(document).ready(function () {
-            @foreach($post as $row)
-                $(".btn-warning").click(function () {
-                if(confirm("Are you sure ?"))
+        $(document).ready(function() {
+            $('.delete-confirm').click(function(event) {
+                if(confirm('Are you sure?'))
                 {
-                    $(location).attr('href','{{route('post.show', $row->id)}}');
+                    location = $(this).data('href');
                 }
             });
-            @endforeach
         });
     </script>
 @stop

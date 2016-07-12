@@ -8,6 +8,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     Route::get('/','HomeController@index');
     Route::resource('post','PostController');
+    Route::resource('posts', 'PostsController', ['only' => ['show']]);
 });
 
 

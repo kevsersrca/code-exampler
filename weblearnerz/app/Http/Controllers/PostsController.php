@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Post;
 
-class PostController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post=\Auth::user()->posts()->get();
-        return view('post.index',compact('post'));
+        //
     }
 
     /**
@@ -27,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
@@ -38,8 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post=\Auth::user()->posts()->create($request->all());
-        return redirect()->route('post.index');
+        //
     }
 
     /**
@@ -50,8 +48,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $row = \Auth::user()->posts()->findOrFail($id);
-        return view('post.view',compact('row'));
+        $post=Post::findOrFail($id)->delete();
+        return redirect()->route('post.index');
     }
 
     /**
@@ -62,8 +60,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $update =\Auth::user()->posts()->findOrFail($id);
-        return view('post.edit', compact('update'));
+        //
     }
 
     /**
@@ -75,8 +72,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Auth::user()->posts()->findOrFail($id)->update($request->all());
-        return redirect()->route('post.index');
+        //
     }
 
     /**
@@ -85,6 +81,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-
+    public function destroy($id)
+    {
+        //
+    }
 }
