@@ -71,7 +71,7 @@ class AuthController extends Controller
     }
     public function authenticated(Request $request, $user)
     {
-        if ($user->activated=0)
+        if (!$user->activated)
         {
             $this->activationService->sendActivationMail($user);
             auth()->logout();

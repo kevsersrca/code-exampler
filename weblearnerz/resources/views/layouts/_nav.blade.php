@@ -44,19 +44,27 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('/post') }}">
-						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Post">
-							<span class="glyphicon glyphicon-list-alt"></span>
-						</span>
-                                <span class="full-nav"> Post </span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ url('/post/create') }}">
 						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Create New Post">
 							<span class="glyphicon glyphicon-plus"></span>
 						</span>
                                 <span class="full-nav"> Create New Post </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/posts') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Your Post">
+							<span class="glyphicon glyphicon-file"></span>
+						</span>
+                                <span class="full-nav">Your Post </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/post') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="All Post">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</span>
+                                <span class="full-nav"> All Post </span>
                             </a>
                         </li>
                         <li>

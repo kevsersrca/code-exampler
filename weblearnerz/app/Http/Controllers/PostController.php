@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Post;
+use App\Comment;
 
 class PostController extends Controller
 {
@@ -16,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post=\Auth::user()->posts()->get();
+        $post=Post::all();
         return view('post.index',compact('post'));
     }
 
@@ -50,8 +51,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $row = \Auth::user()->posts()->findOrFail($id);
-        return view('post.view',compact('row'));
+        $comments = Post::findOrFail($id)->comments()->get();
+        $row = Post::findOrFail($id);
+        return view('post.view',compact('row','comments'));
     }
 
     /**
