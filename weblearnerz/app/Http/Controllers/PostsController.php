@@ -9,17 +9,20 @@ use App\Post;
 
 class PostsController extends Controller
 {
-
+    //get user's posts
     public function index()
     {
         $post=\Auth::user()->posts()->get();
         return view('post.posts',compact('post'));
     }
-
+    //post delete method
     public function show($id)
     {
-        $post=Post::findOrFail($id)->delete();
-        return redirect()->route('post.index');
+        $post =Post::find($id);
+        $post->tags()->detach();
+        $post->languages()->detach();
+        $post->delete();
+        return view('home')->with('status','Deleted');
     }
 
 

@@ -4,6 +4,12 @@
 
 @section('content')
     <table class="table table-striped table-hover ">
+        @if (session('status'))
+            <ul class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <li>{{ session('status') }}</li>
+            </ul>
+        @endif
         <thead>
         <tr class="active">
             <td>Title</td>

@@ -68,6 +68,22 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ url('/language') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Language">
+							<span class="glyphicon glyphicon-pushpin"></span>
+						</span>
+                                <span class="full-nav"> Language </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/tag') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Tag">
+							<span class="glyphicon glyphicon-tags"></span>
+						</span>
+                                <span class="full-nav"> Tag </span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url('/logout') }}">
 						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Logout">
 							<span class="fa fa-sign-out"></span>

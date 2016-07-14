@@ -2,91 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Language;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Post;
+use App\Tag;
 use App\Comment;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //post all view
     public function index()
     {
         $post=Post::all();
         return view('post.index',compact('post'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // get post create view
     public function create()
     {
-        return view('post.create');
+        $language=Language::get();
+        $tag=Tag::get();
+        return view('post.create',compact('language'),compact('tag'));
     }
-
+    //post store
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $post=\Auth::user()->posts()->create($request->all());
-        return redirect()->route('post.index');
+        $post = new Post;
+        $post->user_id=$request->user()->id;
+        $post->title = $request->title;
+        $post->explanation = $request->explanation;
+        $post->usage = $request->usage;
+        $post->codeexample = $request->codeexample;
+        $post->save();
+        $post->languages()->sync($request->langs, false);
+        $post->tags()->sync($request->tags, false);
+        return redirect()->back()->with('status','Post Created!');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Post only view
     public function show($id)
     {
         $comments = Post::findOrFail($id)->comments()->get();
         $row = Post::findOrFail($id);
         return view('post.view',compact('row','comments'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //get edit page
     public function edit($id)
     {
+        $language=Language::get();
+        $tag=Tag::get();
         $update =\Auth::user()->posts()->findOrFail($id);
-        return view('post.edit', compact('update'));
+        return view('post.edit', compact('update','language','tag'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //update post method
     public function update(Request $request, $id)
     {
-        \Auth::user()->posts()->findOrFail($id)->update($request->all());
-        return redirect()->route('post.index');
+        $post = Post::find($id);
+        $post->user_id=$request->user()->id;
+        $post->title = $request->title;
+        $post->explanation = $request->explanation;
+        $post->usage = $request->usage;
+        $post->codeexample = $request->codeexample;
+        $post->save();
+        if (isset($request->tags)) { $post->tags()->sync($request->tags);} else {$post->tags()->sync(array());}
+        if (isset($request->langs)) {$post->languages()->sync($request->langs);} else {$post->languages()->sync(array());}
+        return redirect()->back()->with('status','Post Updated!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
 
 }

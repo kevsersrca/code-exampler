@@ -8,8 +8,8 @@ class Post extends Model
 {
     //başlık,açıklaması,kullanımı,örneği
 
-    protected $fillable = [
-        'title', 'explanation', 'usage','codeexample'
+    public $fillable = [
+        'user_id','title', 'explanation', 'usage','codeexample'
     ];
     public function user()
     {
@@ -18,5 +18,13 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany('App\Comment','post_id');
+    }
+    public function languages()
+    {
+        return $this->belongsToMany('App\Language');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
     }
 }

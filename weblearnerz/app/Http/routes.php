@@ -10,6 +10,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('post','PostController');
     Route::resource('posts', 'PostsController', ['only' => ['show','index']]);
     Route::resource('comment','CommentController', ['only' => ['store','show']]);
+    Route::resource('language','LanguageController');
+    Route::resource('tag','TagController');
 });
 
 
