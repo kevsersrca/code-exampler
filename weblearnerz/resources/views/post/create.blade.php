@@ -2,7 +2,7 @@
 
 @section('title' , '| Create New Post')
 @section('style')
-    <link rel="stylesheet" href="css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
 @endsection
 @section('content')
     <form action="{{route('post.store')}}" method="post">
@@ -53,5 +53,8 @@
     </form>
 @endsection
 @section('scripts')
-    <script src="js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('.select2-multi').select2();
+    </script>
 @endsection

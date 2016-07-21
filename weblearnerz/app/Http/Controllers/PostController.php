@@ -15,7 +15,7 @@ class PostController extends Controller
     //post all view
     public function index()
     {
-        $post=Post::all();
+        $post=Post::orderBy('id','desc')->paginate(10);
         return view('post.index',compact('post'));
     }
     // get post create view
@@ -26,10 +26,7 @@ class PostController extends Controller
         return view('post.create',compact('language'),compact('tag'));
     }
     //post store
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function store(Request $request)
     {
         $post = new Post;
@@ -39,8 +36,11 @@ class PostController extends Controller
         $post->usage = $request->usage;
         $post->codeexample = $request->codeexample;
         $post->save();
-        $post->languages()->sync($request->langs, false);
-        $post->tags()->sync($request->tags, false);
+        if(!($request->langs==null))
+        {$post->languages()->sync($request->langs, []);}
+        if(!($request->tags==null))
+        {$post->tags()->sync($request->tags, []);}
+        
         return redirect()->back()->with('status','Post Created!');
     }
     //Post only view
@@ -53,10 +53,18 @@ class PostController extends Controller
     //get edit page
     public function edit($id)
     {
-        $language=Language::get();
-        $tag=Tag::get();
+        $language=Language::all();
+        $language2 = array();
+        foreach ($language as $languages) {
+            $tags2[$languages->id] = $languages->name;
+        }
+        $tag=Tag::all();
+        $tags2 = array();
+        foreach ($tag as $tags) {
+            $tags2[$tags->id] = $tags->name;
+        }
         $update =\Auth::user()->posts()->findOrFail($id);
-        return view('post.edit', compact('update','language','tag'));
+        return view('post.edit', compact('update','language2','tags2','tag','language'));
     }
     //update post method
     public function update(Request $request, $id)

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title' , '| Edit Post')
-
+@section('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+@endsection
 @section('content')
     <form action="{{route('post.update',$update->id)}}" method="post">
         {{ csrf_field() }}
@@ -50,4 +52,17 @@
             </div>
         </div>
     </form>
+@endsection
+@section('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $('.select2-multi2').select2();
+        $('.select2-multi2').select2().val({!! json_encode($update->tags()->getRelatedIds() ) !!}).trigger('change');
+        $('.select2-multi1').select2();
+        $('.select2-multi1').select2().val({!! json_encode($update->languages()->getRelatedIds() ) !!}).trigger('change');
+
+    </script>
+
 @endsection

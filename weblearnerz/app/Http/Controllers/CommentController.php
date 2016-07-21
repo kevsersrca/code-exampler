@@ -16,13 +16,15 @@ class CommentController extends Controller
         $input['user_id'] =$request->user()->id;
         $input['post_id'] = $request->input('post_id');
         $input['comment'] = $request->input('comment');
-        $post=Post::find($request->input('post_id'))->comments()->create( $input );
+        Post::find($request->input('post_id'))->comments()->create( $input );
         return back()->with('status', 'Comment added');
     }
+
+
     //Delete comment method
     public function show($id)
     {
-        $comment=Comment::findOrFail($id)->delete();
+        Comment::findOrFail($id)->delete();
         return redirect()->back()->with('status','Deleted');
     }
 

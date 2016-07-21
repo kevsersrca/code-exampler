@@ -44,6 +44,14 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ url('/search') }}">
+						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Search">
+							<span class="glyphicon glyphicon-search"></span>
+						</span>
+                                <span class="full-nav"> Search </span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ url('/post/create') }}">
 						<span class="small-nav" data-toggle="tooltip" data-placement="right" title="Create New Post">
 							<span class="glyphicon glyphicon-plus"></span>
