@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
 @section('title' , '| Your Post')
+@section('style')
+    <style>
+        .btn-link,.btn-link:hover,.btn-link:visited,.btn-link:active
+        {
+            color: #000;
 
+        }
+    </style>
+@endsection
 @section('content')
     <table class="table table-striped table-hover ">
-        @if (session('status'))
-            <ul class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <li>{{ session('status') }}</li>
-            </ul>
-        @endif
+        @include('layouts._error')
         <thead>
         <tr class="active">
             <td>Title</td>
@@ -33,15 +36,3 @@
         </tbody>
     </table>
 @endsection
-@section("scripts")
-    <script>
-        $(document).ready(function() {
-            $('.delete-confirm').click(function(event) {
-                if(confirm('Are you sure?'))
-                {
-                    location = $(this).data('href');
-                }
-            });
-        });
-    </script>
-@stop

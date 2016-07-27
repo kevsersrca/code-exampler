@@ -11,21 +11,16 @@ use App\Comment;
 class CommentController extends Controller
 {
     //store comment method
-    public function store(Request $request)
+    public function store(Requests\CommentStoreRequest $request)
     {
-        $input['user_id'] =$request->user()->id;
-        $input['post_id'] = $request->input('post_id');
-        $input['comment'] = $request->input('comment');
-        Post::find($request->input('post_id'))->comments()->create( $input );
-        return back()->with('status', 'Comment added');
+       \Auth::user()->comments()->create($request->all());
+        return back()->withErrors('Comment Add');
     }
-
-
     //Delete comment method
     public function show($id)
     {
         Comment::findOrFail($id)->delete();
-        return redirect()->back()->with('status','Deleted');
+        return redirect()->back()->withErrors('Comment Deleted');
     }
 
 }

@@ -20,29 +20,54 @@ class SearchController extends Controller
         $post=Post::orderBy('id','desc')->paginate(10);
         return view('search.view',compact('tag','language','post'));
     }
-   public function getRedirect()
-   {
-       $search=urlencode(e(Input::get('search')));
-       $route="search/$search";
-       return redirect($route);
-   }
-    public function search($search)
+
+    public function search(Requests\SearchRequest $request)
     {
         $tag=Tag::all();
         $language=Language::all();
-        $search=urldecode($search);
-        $post=Post::select()
-            ->where('title','LIKE','%'.$search.'%')
-            ->orWhere('explanation','LIKE','%'.$search.'%')
-            ->orWhere('usage','LIKE','%'.$search.'%')
-            ->orWhere('codeexample','LIKE','%'.$search.'%')
-            ->orderBy('id','desc')
-            ->get();
-        if(count($post)==0){
-            return view('search.result',compact('tag','language','search'));
+        $search=urlencode(e($request->search));
+        $collection = Post::query();
+        if($request->has('search'))
+        {
+            $collection=$this->postSearch($search,$collection);
         }
-        else{
-            return view('search.result',compact('tag','language','search','post'));
+        if($request->has('tag'))
+        {
+            $collection = $this->tagSearch($request->tag,$collection);
         }
+        if($request->has('language'))
+        {
+            $collection = $this->languageSearch($request->language,$collection);
+        }
+        $collection = $collection->get();
+        return view('search.view',compact('tag','language','search','collection'));
     }
+    //postSearch method
+    public function postSearch($search,$collection)
+    {
+        $collection=$collection->where(function ($q) use ($search) {
+            $q->where('title', 'LIKE', '%' . $search . '%')
+                ->orWhere('explanation','LIKE','%'.$search.'%')
+                ->orWhere('usage','LIKE','%'.$search.'%')
+                ->orWhere('codeexample','LIKE','%'.$search.'%')
+                ->orderBy('id','desc');
+        });
+        return $collection;
+    }
+    //tagSearch method
+    public function tagSearch($tag,$collection)
+    {
+        $collection = $collection->whereHas('tags', function ($query) use ($tag) {
+            $query->whereIn('tag_id', $tag);
+        });
+        return $collection;
+    }
+    //languageSearch method
+    public function languageSearch($language,$collection)
+    {
+        $collection = $collection->whereHas('languages', function ( $query ) use ( $language ){
+            $query->whereIn('language_id',$language);
+        });
+        return $collection;
+}
 }

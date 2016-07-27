@@ -14,7 +14,6 @@
         body {
              padding-top: 15px;
              padding-left: 65px;
-            background:  whitesmoke;
          }
         .container
         {

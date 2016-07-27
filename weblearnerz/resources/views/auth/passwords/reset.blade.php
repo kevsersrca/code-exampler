@@ -12,6 +12,7 @@
                     <h4 class="modal-title">Reset Password</h4>
                 </div>
                 <div class="modal-body">
+                    @include('layouts._error')
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
                         {{ csrf_field() }}
 

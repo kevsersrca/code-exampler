@@ -2,39 +2,32 @@
 @extends('layouts.app')
 
 @section('title' , '| All Tags')
-
 @section('content')
     <div class="row">
-        @if (session('status'))
-            <ul class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <li>{{ session('status') }}</li>
-            </ul>
-        @endif
+        @include('layouts._error')
         <div class="col-md-8">
-            <h1>Tags</h1>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-                </thead>
-
-                <tbody>
-                @foreach ($tag as $tags)
+                <h1>Tags</h1>
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th>{{ $tags->id }}</th>
-                        <td>{{ $tags->name }}</td>
-                        <td>{{ $tags->posts()->count() }} Post</td>
-                        <td><a href="javascript:;" data-href="{{ route('tag.show',$tags->id) }}"  class="btn btn-warning delete-confirm">Delete</a></td>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th></th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div> <!-- end of .col-md-8 -->
+                    </thead>
 
+                    <tbody>
+                    @foreach ($tag as $tags)
+                        <tr>
+                            <th>{{ $tags->id }}</th>
+                            <td>{{ $tags->name }}</td>
+                            <td>{{ $tags->posts()->count() }} Post</td>
+                            <td><a href="javascript:;" data-href="{{ route('tag.show',$tags->id) }}"  class="btn btn-danger delete-confirm">Delete</a></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+        </div> <!-- end of .col-md-8 -->
         <div class="col-md-3">
             <div class="well">
                 <form action="{{route('tag.store')}}" method="post">
@@ -49,15 +42,3 @@
         </div>
     </div>
 @endsection
-@section("scripts")
-    <script>
-        $(document).ready(function() {
-            $('.delete-confirm').click(function(event) {
-                if(confirm('Are you sure?'))
-                {
-                    location = $(this).data('href');
-                }
-            });
-        });
-    </script>
-@stop

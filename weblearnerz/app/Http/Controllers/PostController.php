@@ -12,73 +12,105 @@ use App\Comment;
 
 class PostController extends Controller
 {
-    //post all view
+    /**
+     * post all view
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $post=Post::orderBy('id','desc')->paginate(10);
         return view('post.index',compact('post'));
     }
-    // get post create view
+
+    /**
+     * get post create view
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $language=Language::get();
         $tag=Tag::get();
         return view('post.create',compact('language'),compact('tag'));
     }
-    //post store
-
-    public function store(Request $request)
+    /**
+     * post store method
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Requests\PostStoreRequest $request)
     {
-        $post = new Post;
-        $post->user_id=$request->user()->id;
-        $post->title = $request->title;
-        $post->explanation = $request->explanation;
-        $post->usage = $request->usage;
-        $post->codeexample = $request->codeexample;
-        $post->save();
-        if(!($request->langs==null))
-        {$post->languages()->sync($request->langs, []);}
-        if(!($request->tags==null))
-        {$post->tags()->sync($request->tags, []);}
-        
-        return redirect()->back()->with('status','Post Created!');
+        $post=\Auth::user()->posts()->create($request->all());
+        if($request->has('langs'))
+        {
+            $post->languages()->sync($request->langs, []);
+        }
+        if($request->has('tags'))
+        {
+            $post->tags()->sync($request->tags, []);
+        }
+        return redirect()->back()->withErrors('Post Created!');
     }
-    //Post only view
+
+    /**
+     * Post only view
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
         $comments = Post::findOrFail($id)->comments()->get();
         $row = Post::findOrFail($id);
         return view('post.view',compact('row','comments'));
     }
-    //get edit page
+
+    /**
+     * get edit page
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $language=Language::all();
+        $tag=Tag::all();
         $language2 = array();
         foreach ($language as $languages) {
             $tags2[$languages->id] = $languages->name;
         }
-        $tag=Tag::all();
         $tags2 = array();
         foreach ($tag as $tags) {
             $tags2[$tags->id] = $tags->name;
         }
         $update =\Auth::user()->posts()->findOrFail($id);
-        return view('post.edit', compact('update','language2','tags2','tag','language'));
+        return view('post.edit', compact('update','tag','language'));
     }
-    //update post method
-    public function update(Request $request, $id)
+
+    /**
+     * update post method
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Requests\PostUpdateRequest $request, $id)
     {
-        $post = Post::find($id);
-        $post->user_id=$request->user()->id;
-        $post->title = $request->title;
-        $post->explanation = $request->explanation;
-        $post->usage = $request->usage;
-        $post->codeexample = $request->codeexample;
-        $post->save();
-        if (isset($request->tags)) { $post->tags()->sync($request->tags);} else {$post->tags()->sync(array());}
-        if (isset($request->langs)) {$post->languages()->sync($request->langs);} else {$post->languages()->sync(array());}
-        return redirect()->back()->with('status','Post Updated!');
+        $post=\Auth::user()->posts()->find($id);
+        $post->update($request->all());
+        if ($request->has('tags'))
+        {
+            $post->tags()->sync($request->tags);
+        }
+        else
+        {
+            $post->tags()->sync(array());
+        }
+        if ($request->has('langs'))
+        {
+            $post->languages()->sync($request->langs);
+        }
+        else
+        {
+            $post->languages()->sync(array());
+        }
+        return redirect()->back()->withErrors('Post Updated!');
     }
 
 }

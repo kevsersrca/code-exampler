@@ -9,7 +9,7 @@ class Post extends Model
     //başlık,açıklaması,kullanımı,örneği
 
     public $fillable = [
-        'user_id','title', 'explanation', 'usage','codeexample'
+        'title', 'explanation', 'usage','codeexample'
     ];
     public function user()
     {

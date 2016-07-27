@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Support\Facades\Session;
 use Validator;
@@ -26,17 +28,6 @@ class AuthController extends Controller
         $this->activationService = $activationService;
     }
 
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
-
-
     protected function create(array $data)
     {
         return User::create([
@@ -45,21 +36,13 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
         $user = $this->create($request->all());
 
         $this->activationService->sendActivationMail($user);
 
-        return redirect('/login')->with('status', 'We sent you an activation code. Check your email.');
+        return redirect('/login')->withErrors('We sent you an activation code. Check your email.');
     }
     public function activateUser($token)
     {
@@ -75,7 +58,7 @@ class AuthController extends Controller
         {
             $this->activationService->sendActivationMail($user);
             auth()->logout();
-            return back()->with('status', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+            return back()->withErrors('You need to confirm your account. We have sent you an activation code, please check your email.');
         }
         return redirect()->intended($this->redirectPath());
     }

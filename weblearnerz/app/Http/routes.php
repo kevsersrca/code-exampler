@@ -6,8 +6,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('user/activation/{token}', 'Auth\AuthController@activateUser')->name('user.activate');
     Route::get('/search','SearchController@getSearch');
-    Route::get('/searchredirect','SearchController@getRedirect');
-    Route::get('search/{search}','SearchController@search');
+    Route::post('/search','SearchController@search');
     Route::resource('post','PostController');
     Route::resource('posts', 'PostsController', ['only' => ['show','index']]);
     Route::resource('comment','CommentController', ['only' => ['store','show']]);

@@ -9,20 +9,28 @@ use App\Post;
 
 class PostsController extends Controller
 {
-    //get user's posts
+    /**
+     * get user's posts
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $post=\Auth::user()->posts()->get();
+        $post=\Auth::user()->posts()->orderBy('id','desc')->paginate(10);
         return view('post.posts',compact('post'));
     }
-    //post delete method
+
+    /**
+     * post delete method
+     * @param $id
+     * @return $this
+     */
     public function show($id)
     {
         $post =Post::find($id);
         $post->tags()->detach();
         $post->languages()->detach();
         $post->delete();
-        return view('home')->with('status','Deleted');
+        return view('home')->withErrors('Deleted');
     }
 
 

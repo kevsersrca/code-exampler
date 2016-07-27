@@ -8,5 +8,16 @@
             $('.navbar-twitch').toggleClass('open');
         });
 
+        $('.delete-confirm').click(function(event) {
+            if(confirm('Are you sure?'))
+            {
+                location = $(this).data('href');
+            }
+        });
+        $(".content").on('click','.panel-heading',function(){
+            $(".panel-body").slideUp("slow");
+            var el = $(this).parent(".panel-default").children(".panel-body");
+            el.css('display') == 'block' ?  el.slideUp('slow') : el.slideDown('slow')
+        });
     });
 </script>
