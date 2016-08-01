@@ -35,9 +35,9 @@
                     <hr>
                 </div>
             @endforeach
-            <h3 >Languages</h3>
+            <h3>Languages</h3>
             @foreach($language as $languages)
-                <input type="checkbox" name="language[]"  value="{{$languages->id}}" >
+                <input type="checkbox" name="language[]" value="{{$languages->id}}">
                 <label>{{$languages->name}}</label>
                 <div class="clearfix">
                     <hr>
@@ -61,12 +61,6 @@
                             <pre>
                                 @foreach($posts->tags as $tag)
                                     <a href="">{{ $tag->name }},</a>
-                                @endforeach
-                            </pre>
-                            <label for="Languages"><b>Languages:</b></label>
-                            <pre>
-                               @foreach($posts->languages as $languages)
-                                    <a href="">{{ $languages->name }},</a>
                                 @endforeach
                             </pre>
                             <h3>Comments</h3>
@@ -98,12 +92,6 @@
                             <pre>
                                 @foreach($posts->tags as $tag)
                                     <a href="">{{ $tag->name }},</a>
-                                @endforeach
-                            </pre>
-                                <label for="Languages"><b>Languages:</b></label>
-                            <pre>
-                               @foreach($posts->languages as $languages)
-                                    <a href="">{{ $languages->name }},</a>
                                 @endforeach
                             </pre>
                                 <h3>Comments</h3>

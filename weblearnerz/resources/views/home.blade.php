@@ -1,12 +1,8 @@
 @extends('layouts.app')
 @section('title','| Home')
 @section('content')
-    @if (session('status'))
-        <ul class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <li>{{ session('status') }}</li>
-        </ul>
-    @endif
+   @include('layouts._error')
+    <header>
     <div class="jumbotron">
         <h1>Welcome to Laravel-Blog</h1>
         <pre>
@@ -29,4 +25,5 @@
                 -Laravel
         </pre>
     </div>
+    </header>
 @endsection

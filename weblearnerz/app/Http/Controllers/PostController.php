@@ -30,7 +30,7 @@ class PostController extends Controller
     {
         $language=Language::get();
         $tag=Tag::get();
-        return view('post.create',compact('language'),compact('tag'));
+        return view('post.create',compact('tag','language'));
     }
     /**
      * post store method
@@ -40,10 +40,6 @@ class PostController extends Controller
     public function store(Requests\PostStoreRequest $request)
     {
         $post=\Auth::user()->posts()->create($request->all());
-        if($request->has('langs'))
-        {
-            $post->languages()->sync($request->langs, []);
-        }
         if($request->has('tags'))
         {
             $post->tags()->sync($request->tags, []);
@@ -60,7 +56,7 @@ class PostController extends Controller
     {
         $comments = Post::findOrFail($id)->comments()->get();
         $row = Post::findOrFail($id);
-        return view('post.view',compact('row','comments'));
+        return view('post.view',compact('row','comments','language'));
     }
 
     /**
@@ -70,18 +66,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $language=Language::all();
         $tag=Tag::all();
-        $language2 = array();
-        foreach ($language as $languages) {
-            $tags2[$languages->id] = $languages->name;
-        }
+        $languages=Language::all();
         $tags2 = array();
         foreach ($tag as $tags) {
             $tags2[$tags->id] = $tags->name;
         }
         $update =\Auth::user()->posts()->findOrFail($id);
-        return view('post.edit', compact('update','tag','language'));
+        return view('post.edit', compact('update','tag','languages'));
     }
 
     /**
@@ -101,14 +93,6 @@ class PostController extends Controller
         else
         {
             $post->tags()->sync(array());
-        }
-        if ($request->has('langs'))
-        {
-            $post->languages()->sync($request->langs);
-        }
-        else
-        {
-            $post->languages()->sync(array());
         }
         return redirect()->back()->withErrors('Post Updated!');
     }

@@ -9,7 +9,7 @@ class Post extends Model
     //başlık,açıklaması,kullanımı,örneği
 
     public $fillable = [
-        'title', 'explanation', 'usage','codeexample'
+        'language_id','title', 'explanation', 'usage','codeexample'
     ];
     public function user()
     {
@@ -19,9 +19,9 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment','post_id');
     }
-    public function languages()
+    public function language()
     {
-        return $this->belongsToMany('App\Language');
+        return $this->belongsTo('App\Language');
     }
     public function tags()
     {

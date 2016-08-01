@@ -10,35 +10,33 @@
                 {{$row->title}}
             </div>
         </h1>
-        <h3 class="list-group-item-text">Post Explanation:
+        <h4 class="list-group-item-text"><b>Post Explanation:</b>
             <div class="clearfix well">
                 {{$row->explanation}}
             </div>
-        </h3>
-        <h3 class="list-group-item-text">Post Usage:
+        </h4>
+        <h4 class="list-group-item-text"><b>Post Usage:</b>
             <div class="clearfix well">
                 {{$row->usage}}
             </div>
-        </h3>
-        <h3 class="list-group-item-text">Code Example:
+        </h4>
+        <h4 class="list-group-item-text"><b>Code Example:</b>
             <div class="clearfix well">
                 {{$row->codeexample}}
             </div>
-        </h3>
-        <h3 class="list-group-item-text">Languages:
+        </h4>
+        <h4 class="list-group-item-text"><b>Language:</b>
             <div class="clearfix well">
-                @foreach($row->languages as $language)
-                    -{{$language->name}}<br>
-                @endforeach
+                {{$row->language->name}}
             </div>
-        </h3>
-        <h3 class="list-group-item-text">Tags:
+        </h4>
+        <h4 class="list-group-item-text"><b>Tags:</b>
             <div class="clearfix well">
                 @foreach($row->tags as $tag)
                     -{{$tag->name}}<br>
                 @endforeach
             </div>
-        </h3>
+        </h4>
         @if(\Auth::user()->id==$row->user_id)
             <a href="{{route('post.edit',$row->id)}}" class="btn btn-success">Edit</a>
             <a href="javascript:;" data-href="{{ route('posts.show',$row->id) }}"  class="btn btn-danger delete-confirm">Delete</a>

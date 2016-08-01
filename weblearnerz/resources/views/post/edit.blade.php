@@ -27,10 +27,10 @@
                     <textarea type="text"  name="codeexample" class="form-control">{{$update->codeexample}}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="Languages">Languages (click ctrl for multiple) </label>
-                    <select class="form-control select2-multi1" name="langs[]" multiple="multiple">
-                        @foreach($language as $languages)
-                            <option value='{{ $languages->id }}'>{{ $languages->name }}</option>
+                    <label>Language</label>
+                    <select class="form-control js-example-basic-single" name="language_id">
+                        @foreach($languages as $language)
+                            <option value='{{$language->id}}'>{{$language->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-default btn-block">Update</button>
+                    <button class="btn btn-success btn-block">Update</button>
                 </div>
         </form>
     </div>
@@ -53,7 +53,7 @@
     <script type="text/javascript">
         $('.select2-multi2').select2();
         $('.select2-multi2').select2().val({!! json_encode($update->tags()->getRelatedIds() ) !!}).trigger('change');
-        $('.select2-multi1').select2();
-        $('.select2-multi1').select2().val({!! json_encode($update->languages()->getRelatedIds() ) !!}).trigger('change');
-    </script>
+        $('.js-example-basic-single').select2();
+        $('.js-example-basic-single').select2().val({!! json_encode($update->language->id ) !!}).trigger('change');
+       </script>
 @endsection

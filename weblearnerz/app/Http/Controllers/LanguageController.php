@@ -37,7 +37,6 @@ class LanguageController extends Controller
     public function show($id)
     {
         $language = Language::find($id);
-        $language->posts()->detach();
         $language->delete();
         return redirect()->back()->withErrors('Language Deleted!');
     }

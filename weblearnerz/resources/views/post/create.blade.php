@@ -26,8 +26,8 @@
                 <textarea type="text" value="{{old('codeexample')}}" name="codeexample" class="form-control" ></textarea>
             </div>
             <div class="form-group">
-                <label for="Languages">Languages (click ctrl for multiple) </label>
-                <select class="form-control select2-multi" name="langs[]" multiple="multiple">
+                <label>Languages</label>
+                <select class="form-control js-example-basic-single" name="language_id">
                     @foreach($language as $languages)
                         <option value='{{ $languages->id }}'>{{ $languages->name }}</option>
                     @endforeach
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <button class="btn btn-default btn-block">Create</button>
+                <button class="btn btn-success btn-block">Create</button>
             </div>
         </form>
     </div>
@@ -51,5 +51,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $('.select2-multi').select2();
+        $(".js-example-basic-single").select2();
     </script>
 @endsection

@@ -28,7 +28,6 @@ class PostsController extends Controller
     {
         $post =Post::find($id);
         $post->tags()->detach();
-        $post->languages()->detach();
         $post->delete();
         return view('home')->withErrors('Deleted');
     }

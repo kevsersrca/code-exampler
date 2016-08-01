@@ -3,14 +3,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel @yield('title')</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/yeti/bootstrap.min.css" >
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-2mX2PSpkRSXLQzmNzH3gwK6srb06+OfbDlYjbog8LQuALYJjuQ3+Yzy2JIWNV9rW" crossorigin="anonymous">
     <style>
         @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
         .container > .well > h1,h3
         {
             font-family: Impact;
         }
-
+        .list-group-item-text {
+            color: #444444;
+        }
         body {
              padding-top: 15px;
              padding-left: 65px;

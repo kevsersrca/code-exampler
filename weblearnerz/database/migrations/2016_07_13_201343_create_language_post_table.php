@@ -12,13 +12,7 @@ class CreateLanguagePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_post', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('language_id')->unsigned();
-            $table->foreign('language_id')->references('id')->on('languages');
-            $table->integer('post_id')->unsigned();
-            $table->foreign('post_id')->references('id')->on('posts');
-        });
+
     }
 
     /**
@@ -28,6 +22,6 @@ class CreateLanguagePostTable extends Migration
      */
     public function down()
     {
-        Schema::drop('language_post');
+        
     }
 }

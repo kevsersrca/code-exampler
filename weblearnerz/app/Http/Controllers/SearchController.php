@@ -16,9 +16,9 @@ class SearchController extends Controller
     public function getSearch()
     {
         $tag=Tag::all();
-        $language=Language::all();
         $post=Post::orderBy('id','desc')->paginate(10);
-        return view('search.view',compact('tag','language','post'));
+        $language=Language::all();
+        return view('search.view',compact('tag','post','language'));
     }
 
     public function search(Requests\SearchRequest $request)
@@ -39,8 +39,9 @@ class SearchController extends Controller
         {
             $collection = $this->languageSearch($request->language,$collection);
         }
+        
         $collection = $collection->get();
-        return view('search.view',compact('tag','language','search','collection'));
+        return view('search.view',compact('tag','search','collection','language'));
     }
     //postSearch method
     public function postSearch($search,$collection)
@@ -65,9 +66,10 @@ class SearchController extends Controller
     //languageSearch method
     public function languageSearch($language,$collection)
     {
-        $collection = $collection->whereHas('languages', function ( $query ) use ( $language ){
-            $query->whereIn('language_id',$language);
+        $collection = $collection->where(function ($q) use ($language) {
+            $q->whereIn('language_id', $language)
+                ->orderBy('id','desc');
         });
         return $collection;
-}
+    }
 }

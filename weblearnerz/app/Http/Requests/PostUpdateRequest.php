@@ -24,7 +24,7 @@ class PostUpdateRequest extends Request
     public function rules()
     {
         return [
-            'title'=>'required|unique:posts|max:255',
+            'title'=>'required|max:255',
             'explanation'=>'required|max:255',
             'usage'=>'required|max:255',
             'codeexample'=>'required|max:255'
